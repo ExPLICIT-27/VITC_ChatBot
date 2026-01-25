@@ -1,3 +1,9 @@
 fastapi
 uvicorn
-pinecone
+python-dotenv
+weaviate-client
+google-generativeai
+pymupdf
+camelot-py[cv]
+pandas
+tabulate

@@ -2,7 +2,7 @@
 from typing import Any, Dict, List, Optional
 
 try:
-    from WeaviateGeminiInterface.RAG_CORE import query as core_query  # def query(query: str, top_k: int, collections: Optional[List[str]]) -> dict
+    from app.WeaviateGeminiInterface.RAG_CORE import query as core_query  # def query(query: str, top_k: int, collections: Optional[List[str]]) -> dict
 except Exception:
     print("Failed to import query function")
     

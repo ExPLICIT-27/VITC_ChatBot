@@ -5,11 +5,14 @@ from weaviate.classes.config import Configure, Property, DataType
 from weaviate.exceptions import WeaviateQueryError, WeaviateConnectionError
 from weaviate.classes.query import Filter
 from dotenv import load_dotenv
+from .pdf_processor import process_pdfs_in_directory
 
 load_dotenv()
 
 # Weaviate Configuration from environment variables
 
+# Configuration
+PERFORM_INGESTION = True
 
 def connect_to_weaviate():
     """Connects to Weaviate and returns the client object."""
@@ -35,7 +38,7 @@ def connect_to_weaviate():
         return None
 
 #collection creation
-def get_or_create_collection(client, collection_name="VIT_docs", fresh_start=False):
+def get_or_create_collection(client, collection_name="VIT_docs", fresh_start=True):
     """
     Gets or creates a Weaviate collection. 
     If fresh_start is True, it will delete the collection if it already exists.
@@ -133,15 +136,27 @@ def delete_chunks_from_source(collection, source_filename):
 
 
 client = connect_to_weaviate()
-if client:
-    try:
-        name = get_or_create_collection(client, "VIT_docs", True)
-        print(name)
+if not client:
+    print("Weaviate connection failed")
+    exit() # Exit if Weaviate connection fail
 
-        if name is None:
-            print("BOOLEAN ISSUE")
-        else:
-            print("done")
-        client.close()
-    except Exception as e:
-        print(e)
+try:
+    collection_name = "VIT_docs"
+    # Get or create the collection, deleting it first if PERFORM_INGESTION is True
+    documents_collection = get_or_create_collection(
+        client, 
+        collection_name, 
+        fresh_start=PERFORM_INGESTION
+    )
+    if documents_collection is None:
+        print("Collection creation failed")
+        exit() 
+
+    # --- Data Ingestion Step ---
+    # Process all PDFs in the specified directory
+    PDF_DIRECTORY = r"C:\VITC_ChatBot_backend\VITC_ChatBot\Backend\data"
+    data_to_ingest = process_pdfs_in_directory(PDF_DIRECTORY)
+    # Ingest the processed data into Weaviate
+    ingest_data(documents_collection, data_to_ingest)
+except Exception as e:
+    print(f"❌ An error occurred: {e}")

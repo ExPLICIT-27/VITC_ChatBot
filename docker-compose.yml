@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./Backend/.env
+    volumes:
+      - ./Backend/app:/app/app # Mount source for hot reloading if needed, though usually just copy is safer for prod-like
+    restart: always
+
+  frontend:
+    build:
+      context: ./Frontend/ChatBotFrontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:80" # Map host 5173 to container 80
+    depends_on:
+      - backend
+    restart: always

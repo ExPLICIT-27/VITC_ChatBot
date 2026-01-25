@@ -21,7 +21,11 @@ def query(user_query : str):
     # Set to True to delete the existing Weaviate collection and re-ingest all PDFs.
     # Set to False to use the existing data and just ask questions.
     PERFORM_INGESTION = False 
-    PDF_DIRECTORY = r"C:\VITC_ChatBot_backend\VITC_ChatBot\Backend\data" # The folder containing your PDF files
+    import os
+    # The folder containing your PDF files. 
+    # In Docker, this will be /code/Backend/data if WORKDIR is /code/Backend.
+    # We use a relative path here to support both local and docker execution (assuming run from Backend dir).
+    PDF_DIRECTORY = os.path.join(os.getcwd(), "data") 
     
     # --- API and DB Setup ---
     if not configure_gemini():
