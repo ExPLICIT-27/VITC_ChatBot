@@ -7,3 +7,7 @@ pymupdf
 camelot-py[cv]
 pandas
 tabulate
+sqlalchemy
+PyJWT
+bcrypt
+passlib[bcrypt]

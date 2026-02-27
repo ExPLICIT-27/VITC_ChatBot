@@ -1,4 +1,21 @@
-venv/
-__pycache__/
-.env
+# Dependencies
 node_modules/
+venv/
+env/
+__pycache__/
+
+# Environment Files
+.env
+.env.*
+!.env.example
+
+# Build Outputs
+dist/
+build/
+*.pyc
+
+# Databases
+*.sqlite
+*.db
+*.db-shm
+*.db-wal
