@@ -45,7 +45,19 @@ VITC_ChatBot is a sophisticated, AI-powered conversational assistant designed sp
     -   **Cost:** Usage of commercial APIs (Gemini, Weaviate Cloud) may incur costs at scale.
 
 ## 8. Technical Stack
--   **Frontend:** React, TypeScript, TailwindCSS, Framer Motion, OGL (WebGL).
--   **Backend:** FastAPI, Python 3.10.
+-   **Frontend:** React, TypeScript, TailwindCSS, Axios.
+-   **Backend:** FastAPI, Python 3.10, SQLAlchemy, SQLite, bcrypt, PyJWT.
 -   **AI/ML:** Google Gemini (LLM), Weaviate (Vector DB), Sentence Transformers (Embeddings).
--   **Infrastructure:** Docker, Docker Compose, Nginx.
+
+## 9. Recent Updates
+- **Robust Authentication:** Secure JWT-based user login and registration system with direct bcrypt password hashing.
+- **Persistent Chat History:** Seamless conversation management using an SQLite relational database. Chats are auto-saved per user, and new chat threads can be created on the fly with auto-titling based on prompt context.
+- **Environment Security:** Added comprehensive `.env` management across both Frontend and Backend, ensuring no API keys or system configurations are hardcoded for production/commit readiness. 
+- **Enhanced UI:** Complete sidebar overhaul to gracefully handle dynamic conversation lists and user profile avatars seamlessly integrated with the 'Galaxy' theme.
+
+
+### 10. Architecture Diagram
+![alt text](image.png)
+
+
+### 11. Figma WireFrames
